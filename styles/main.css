@@ -62,6 +62,12 @@ html {
      color: rgb(233,50,117);
  }
 
+/* Active color change */
+ .links-container .navbar-link:active {
+     color: rgb(233,50,117);
+     background-color: white;
+ }
+
 .container {
      margin: 0 auto;
      max-width: 64rem;
