@@ -8,9 +8,12 @@ var pointsArray = document.getElementsByClassName('point');
                      points[indNum].style.WebkitTransform = "scaleX(1) translateY(0)";  
                  };
  
-                 for (var i = 0; i<points.length; i++) {
+                 /* for (var i = 0; i<points.length; i++) {
                      revealPoint(i);
-                 }
+                 } */
+                
+                  points.forEach(revealPoint(i));
+     
              };
 
 window.onload = function() {
