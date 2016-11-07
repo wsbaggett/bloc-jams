@@ -30,6 +30,22 @@
      ]
  };
 
+ // My Example Album
+ var albumSkate = {
+     title: 'Skateboard Heaven',
+     artist: 'Larry Stevenson',
+     label: 'SB',
+     year: '1963',
+     albumArtUrl: 'assets/images/album_covers/12.png',
+     songs: [
+         { title: 'Air', duration: '2:01' },
+         { title: 'Grind', duration: '3:13' },
+         { title: 'Vert Ramp', duration: '7:07'},
+         { title: 'Goofy Foot', duration: '5:15' },
+         { title: 'Heelflip', duration: '2:35'}
+     ]
+ };
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -42,14 +58,14 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
-var setCurrentAlbum = function(album) {
-     // #1
+ // #1
      var albumTitle = document.getElementsByClassName('album-view-title')[0];
      var albumArtist = document.getElementsByClassName('album-view-artist')[0];
      var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
      var albumImage = document.getElementsByClassName('album-cover-art')[0];
      var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
+
+var setCurrentAlbum = function(album) {
      // #2
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
@@ -63,8 +79,19 @@ var setCurrentAlbum = function(album) {
      for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
+    
  };
- 
+var ind = 0;
+var albumNames = [albumPicasso, albumMarconi, albumSkate];
+
  window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+     setCurrentAlbum(albumNames[ind]);
+     
+     albumImage.addEventListener("click", function(clickOn) {
+        ind++;
+         if (ind == albumNames.length) {
+             ind = 0;
+         }
+         setCurrentAlbum(albumNames[ind]);
+    });
  };
