@@ -28,6 +28,23 @@ var setVolume = function(volume) {
      }
  };
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+    $('.seek-control .current-time').text(currentTime);
+ };
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    $('.seek-control .total-time').text(totalTime);
+ };
+
+var filterTimeCode = function(timeInSeconds) {
+    parseFloat(timeInSeconds);
+    var roundedSecs = Math.floor(timeInSeconds);
+    var fullMins = Math.floor(roundedSecs / 60);
+    var fullSecs = Math.floor(roundedSecs%60);
+    
+    return fullMins + ":" + fullSecs;
+};
+
 var getSongNumberCell = function(number) {
     // new function for assignment 19
     return $('.song-item-number[data-song-number="' + number + '"]');
@@ -38,7 +55,7 @@ var createSongRow = function(songNumber, songName, songLength) {
         '<tr class="album-view-song-item">'
       + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
       + '  <td class="song-item-title">' + songName + '</td>'
-      + '  <td class="song-item-duration">' + songLength + '</td>'
+      + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
       + '</tr>'
       ;
  
@@ -139,7 +156,9 @@ var updateSeekBarWhileSongPlays = function() {
              // #11
              var seekBarFillRatio = this.getTime() / this.getDuration();
              var $seekBar = $('.seek-control .seek-bar');
- 
+      
+             setCurrentTimeInPlayerBar(filterTimeCode(this.getTime()));
+             
              updateSeekPercentage($seekBar, seekBarFillRatio);
          });
      }
@@ -265,6 +284,8 @@ var updatePlayerBarSong = function() {
     $('.currently-playing .artist-name').text(currentAlbum.artist);
     $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist); 
     
+    setTotalTimeInPlayerBar(filterTimeCode(currentSongFromAlbum.duration));
+    
     $('.main-controls .play-pause').html(playerBarPauseButton);
 };
 
@@ -281,6 +302,8 @@ var updatePlayerBarSong = function() {
  var currentSongFromAlbum = null;
  var currentSoundFile = null;
  var currentVolume = 80;
+ var currentTime = null;
+ var totalTime = null;
 
  var $previousButton = $('.main-controls .previous');
  var $nextButton = $('.main-controls .next');
